@@ -1,100 +1,76 @@
 let num1 = "";
 let num2 = "";
 let operador = "";
-let resultado = "";
-let memoria = "";
 const calculadora = document.getElementById("resultado");
-const botones = [
-  ["7", "8", "9", "x"],
-  ["4", "5", "6", "-"],
-  ["1", "2", "3", "+"],
-  ["C", "0", ",", "="],
-  ["!"],
-];
 
-function crearBotones() {
-  const container = document.getElementById("botones");
-  botones.forEach((fila) => {
-    const div = document.createElement("div");
-    fila.forEach((boton) => {
-      const button = document.createElement("button");
-      button.textContent = boton;
-      button.onclick = () => {
-        if (boton === "C") {
-          limpiar();
-        } else if (boton === "=") {
-          calcular();
-        } else if (boton === "!") {
-          factorial();
-        } else if (boton === ",") {
-          decimal();
-        } else {
-          if (["x", "-", "+", "/"].includes(boton)) {
-            setop(boton);
-          } else {
-            agregarn(boton);
-          }
-        }
-      };
-      div.appendChild(button);
-    });
-    container.appendChild(div);
-  });
+/* Funciones Principales */
+function calcular(n1, n2, op) {
+  if(op === "" || n1 === "" || n2 === "") return;
+
+  n1 = procesarFactorial(n1);
+  n2 = procesarFactorial(n2);
+
+  const numero1 = parseFloat(n1);
+  const numero2 = parseFloat(n2);
+
+  let resultado;
+  switch (op) {
+    case "+":
+      resultado = numero1 + numero2;
+      break;
+    case "-":
+      resultado = numero1 - numero2;
+      break;
+    case "x":
+      resultado = numero1 * numero2;
+      break;
+    case "/":
+      resultado = numero1 !== 0 ? numero1 / numero2 : "Indeterminación";
+      break;
+    default:
+      return;
+  }
+
+  return resultado;
 }
 
-crearBotones();
-
-function agregarn(numero) {
+function agregarNumero(numero) {
+  console.log(numero);
   if (operador === "") {
     num1 += numero;
     calculadora.value = num1;
   } else {
     num2 += numero;
-    calculadora.value = num1 + " " + operador + " " + num2;
+    calculadora.value = `${num1} ${operador} ${num2}`;
   }
 }
 
-function setop(operacion) {
+function agregarOperacion(operacion) {
   if (num1 === "") return;
 
   operador = operacion;
   calculadora.value += " " + operador;
 }
 
-function calcular() {
-  if (operador === "" || num1 === "" || num2 === "") return;
-
-  num1 = procesarFactorial(num1);
-  num2 = procesarFactorial(num2);
-
-  const n1 = parseFloat(num1);
-  const n2 = parseFloat(num2);
-
-  switch (operador) {
-    case "+":
-      resultado = n1 + n2;
-      break;
-    case "-":
-      resultado = n1 - n2;
-      break;
-    case "x":
-      resultado = n1 * n2;
-      break;
-    case "/":
-      resultado = n2 !== 0 ? n1 / n2 : "indeterminado";
-      break;
-    default:
-      return;
+function ejecutarCalculo() {
+  const resultado = calcular(num1, num2, operador);
+  if(resultado !== undefined) {
+    calculadora.value = resultado;
+    num1 = resultado.toString();
+    num2 = "";
+    operador = "";
   }
-
-  calculadora.value = resultado;
-  num1 = resultado.toString();
-  num2 = "";
-  operador = "";
-
-  console.log(resultado);
 }
 
+function limpiar() {
+  num1 = "";
+  num2 = "";
+  operador = "";
+  calculadora.value = "";
+  resultado = "";
+}
+
+/* Funciones Adicionales */
 function decimal() {
   if (calculadora.value === "") return;
 
@@ -129,6 +105,7 @@ function factorial() {
   }
 }
 
+/* Otros Procesos */
 function procesarFactorial(numero) {
   if (numero.includes("!")) {
     const n = parseInt(numero.replace("!", ""), 10);
@@ -137,6 +114,7 @@ function procesarFactorial(numero) {
 
   return numero;
 }
+
 function calcularFactorial(n) {
   n = parseInt(n, 10);
   if (n === 0 || n === 1) {
@@ -146,24 +124,18 @@ function calcularFactorial(n) {
   }
 }
 
-function limpiar() {
-  num1 = "";
-  num2 = "";
-  operador = "";
-  calculadora.value = "";
-  resultado = "";
-}
-
-document.addEventListener("keypress", function (event) {
+document.addEventListener("keydown", function (event) {
   if (event.key >= "0" && event.key <= "9") {
-    agregarn(event.key);
+    agregarNumero(event.key);
   } else if (["*", "-", "+", "/"].includes(event.key)) {
-    setop(event.key);
+    agregarOperacion(event.key);
   } else if (event.key === "Enter") {
-    calcular();
+    ejecutarCalculo();
   } else if ([",", "."].includes(event.key)) {
     decimal();
   } else if (event.key === "!") {
     factorial();
+  } else if (event.key === "Backspace") {
+    limpiar();
   }
 });
