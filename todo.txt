@@ -1,0 +1,1 @@
+[ ] Cuando se usa la automatización y sale "Entrada inválida" permite seguir agregando operadores, se daña la lógica de las funciones.

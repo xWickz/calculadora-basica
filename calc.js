@@ -10,6 +10,18 @@ function calcular(n1, n2, op) {
   n1 = procesarFactorial(n1);
   n2 = procesarFactorial(n2);
 
+  if(calculadora.value == "Entrada inválida") {
+    return;
+  }
+
+  if(isNaN(n1) || isNaN(n2)) {
+    calculadora.value = "Entrada inválida";
+    num1 = "";
+    num2 = "";
+    operador = "";
+    return;
+  }
+
   const numero1 = parseFloat(n1);
   const numero2 = parseFloat(n2);
 
@@ -48,8 +60,15 @@ function agregarNumero(numero) {
 function agregarOperacion(operacion) {
   if (num1 === "") return;
 
-  operador = operacion;
-  calculadora.value += " " + operador;
+  /* Operaciones en Automático */
+  if (operador !== "") {
+    ejecutarCalculo();
+  }
+
+    if(!["+","-","x","/"].includes(calculadora.value.trim().slice(-1))) {
+      operador = operacion;
+      calculadora.value += " " + operador;
+  }
 }
 
 function ejecutarCalculo() {
@@ -71,22 +90,54 @@ function limpiar() {
 }
 
 /* Funciones Adicionales */
-function decimal() {
-  if (calculadora.value === "") return;
+function decimal() { // Función Experimental (Lo digo por los console-log).
+  
+  if(calculadora.value === "") { // Si la calculadora esta vacía, entonces se pone "0." en vez de "." al primer número.
+    num1 = "0.";
+      console.log("Función Decimal 1");
+      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
+    return;
+  }
 
-  if (resultado !== "") {
-    if (!num2.includes(".")) {
-      num2 += ".";
+  if(resultado !== "") {
+    if(!num1.includes(".") && operador === "") { 
+      // Si el número 1 tiene valor, pero, no tiene ".", el operador es vacío y no hay resultado, aún.
+      num1 += ".";
+        console.log("Función Decimal 2");
+        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
+      return;
+    } else if(num1 === "") { 
+      // Si en este caso el número 1 no contiene valor se le antepone "0."
+      num1 += "0.";
+        console.log("Función Decimal 3");
+        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
       return;
     }
   }
 
-  if (!num1.includes(".") && resultado === "") {
-    num1 += ".";
+  if(!num1.includes(".") && resultado === "") {
+    // Si el número 1 tiene valor pero no tiene ".". Adicional, el resultado es vacío.
+    if(num1 === "") {
+        // Si el número 1 no tiene valor, se le antepone un "0."
+      num1 = "0.";
+      console.log("Función Decimal 7");
+      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
+      return;
+    }
+      num1 += ".";
+      console.log("Función Decimal 4");
+      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
     return;
-  } else if (!num2.includes(".")) {
-    if (num2 === "") return;
+  } else if(!num2.includes(".") && operador !== "") {
+    if(num2 === "") {
+      num2 += "0.";
+        console.log("Función Decimal 6");
+        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
+      return;
+    }
     num2 += ".";
+      console.log("Función Decimal 5");
+      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
     return;
   }
 }
@@ -107,12 +158,19 @@ function factorial() {
 
 /* Otros Procesos */
 function procesarFactorial(numero) {
+
   if (numero.includes("!")) {
     const n = parseInt(numero.replace("!", ""), 10);
-    return calcularFactorial(numero);
+
+    if(n > 170) {
+      return;
+    }
+
+    return calcularFactorial(n)
   }
 
   return numero;
+  
 }
 
 function calcularFactorial(n) {
