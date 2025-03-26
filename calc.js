@@ -94,8 +94,6 @@ function decimal() { // Función Experimental (Lo digo por los console-log).
   
   if(calculadora.value === "") { // Si la calculadora esta vacía, entonces se pone "0." en vez de "." al primer número.
     num1 = "0.";
-      console.log("Función Decimal 1");
-      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
     return;
   }
 
@@ -103,14 +101,10 @@ function decimal() { // Función Experimental (Lo digo por los console-log).
     if(!num1.includes(".") && operador === "") { 
       // Si el número 1 tiene valor, pero, no tiene ".", el operador es vacío y no hay resultado, aún.
       num1 += ".";
-        console.log("Función Decimal 2");
-        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
       return;
     } else if(num1 === "") { 
       // Si en este caso el número 1 no contiene valor se le antepone "0."
       num1 += "0.";
-        console.log("Función Decimal 3");
-        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
       return;
     }
   }
@@ -120,25 +114,17 @@ function decimal() { // Función Experimental (Lo digo por los console-log).
     if(num1 === "") {
         // Si el número 1 no tiene valor, se le antepone un "0."
       num1 = "0.";
-      console.log("Función Decimal 7");
-      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
       return;
     }
       num1 += ".";
-      console.log("Función Decimal 4");
-      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
-    return;
+      return;
   } else if(!num2.includes(".") && operador !== "") {
     if(num2 === "") {
       num2 += "0.";
-        console.log("Función Decimal 6");
-        console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
       return;
     }
-    num2 += ".";
-      console.log("Función Decimal 5");
-      console.log(`Número 1: ${num1} | Número  2: ${num2} | Operador: ${operador}`);
-    return;
+      num2 += ".";
+      return;
   }
 }
 
