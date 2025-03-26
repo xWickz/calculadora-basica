@@ -1,1 +1,2 @@
 [ ] Cuando se usa la automatización y sale "Entrada inválida" permite seguir agregando operadores, se daña la lógica de las funciones.
+[ ] Se debe redondear los valores de los dígitos 
