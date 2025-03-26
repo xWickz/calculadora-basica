@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculadora</title>
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+        <script src="calc.js" defer></script>
+    </head>
+<body>
+<section id="calculadora" class="calculadora">
+
+    <input type="text" id="resultado" disabled>
+
+    <div id="botones">
+
+        <div>
+            <button onclick="agregarNumero('7')">7</button>
+            <button onclick="agregarNumero('8')">8</button>
+            <button onclick="agregarNumero('9')">9</button>
+            <button onclick="agregarOperacion('x')">x</button>
+        </div>
+
+        <div>
+            <button onclick="agregarNumero('4')">4</button>
+            <button onclick="agregarNumero('5')">5</button>
+            <button onclick="agregarNumero('6')">6</button>
+            <button onclick="agregarOperacion('-')">-</button>
+        </div>
+
+        <div>
+            <button onclick="agregarNumero('1')">1</button>
+            <button onclick="agregarNumero('2')">2</button>
+            <button onclick="agregarNumero('3')">3</button>
+            <button onclick="agregarOperacion('+')">+</button>
+        </div>
+
+        <div>
+            <button onclick="limpiar()">C</button>
+            <button onclick="agregarNumero('0')">0</button>
+            <button onclick="decimal()">,</button>
+            <button onclick="ejecutarCalculo()">=</button>
+        </div>
+
+        <div>
+            <button onclick="factorial()">!</button>
+            <button onclick="agregarOperacion('/')">÷</button>
+        </div>
+
+    </div>
+    
+</section>
+
+</body>
+</html>
