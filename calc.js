@@ -1,7 +1,3 @@
-let num1 = "";
-let num2 = "";
-let operador = "";
-
 const state = {
   num1: "",
   num2: "",
